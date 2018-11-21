@@ -19,7 +19,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         loginButton.style.visibility = "hidden";
         logoutButton.style.visibility = "visible";
         signUpButton.style.visibility = "hidden";
-        console.log(firebase.auth().currentUser.email);
     }
     else {
         //No user is signed in

@@ -153,10 +153,10 @@
                         <label for="title" class="text-bold">Title</label>
                         <input type="text" class="form-control" id="title" placeholder="Title" name="title">
                     </div>
-                    <div class="form-group">
-                        <label for="img" class="text-bold">Image</label>
-                        <input type="file" accept='image/*' onchange='openFile(event)' class="form-control-file border" name="file" id="img">
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label for="img" class="text-bold">Image</label>-->
+                        <!--<input type="file" accept='image/*' onchange='openFile(event)' class="form-control-file border" name="file" id="img">-->
+                    <!--</div>-->
                     <div class="form-group">
                         <label for="price" class="text-bold">Price</label>
                         <input type="text" class="form-control" id="price" placeholder="Price" name="price">
@@ -174,9 +174,9 @@
                             <option>Electronics</option>
                         </select>
                     </div>
-                    <div id="googleMap" style="width:100%;height:400px;"></div>
-                    <input type="button" value="Current location" id="selectLocation"/>
-                    <input type="button" id="sendPostBtn" class="btn button1" value="Submit"/>
+                    <!--<div id="googleMap" style="width:100%;height:400px;"></div>-->
+                    <!--<input type="button" value="Current location" id="selectLocation"/>-->
+                    <button type="button" id="submitPostButton" class="btn button1" onclick="submitPost()">Submit</button>
                 </form>
             </div>
         </div>
