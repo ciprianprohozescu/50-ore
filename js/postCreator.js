@@ -27,7 +27,7 @@ function submitPost() {
         minute: today.getMinutes()
     };
     const image = document.getElementById('postImage').files[0];
-    const imageRef = firebase.storage().ref().child(title + '.jpg');
+    const imageRef = firebase.storage().ref().child(today.getTime() + '.jpg');
     imageRef.put(image);
 
     db.collection("posts").add({

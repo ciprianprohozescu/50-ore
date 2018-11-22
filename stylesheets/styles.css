@@ -26,6 +26,7 @@
 
 .button1 {
     font-family: 'Anton', sans-serif;
+    font-size: 3vmin;
     background: #08B3AB;
     color: white;
     border-radius: 10px;
@@ -50,9 +51,9 @@
 
 .text-title {
     font-family: 'Pattaya', sans-serif;
+    font-size: 7vmin;
     color: #08B3AB;
     font-weight: bold;
-    font-size: 30pt;
     text-shadow: -2px 2px#FFDE08
 }
 
@@ -104,6 +105,15 @@
     z-index: 1;
 }
 
-.feed {
+.info {
     margin-top: 120px;
+    box-shadow: -15px 15px 0px 0px rgba(8,179,171,1);
+    border-radius: 10px;
+    background-color: #FFDE08;
+    font-family: 'Anton', sans-serif;
+    font-size: 3vmin;
+    color: #08B3AB;
+    display: inline-block;
+    margin-left: 5%;
+    padding: 0.5%;
 }
