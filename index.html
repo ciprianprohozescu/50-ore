@@ -24,26 +24,26 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <button type="button" class="btn button1" id="uploadBtn" data-toggle="modal" data-target="#uploadModal">
+    <button type="button" class="btn button1" id="uploadButton" data-toggle="modal" data-target="#uploadModal">
         Upload
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav centered">
+      <!--<ul class="navbar-nav centered">-->
 
-        <li class="nav-item ">
-                <form class="form-inline centered" action="#">
-                    <input class="form-control limit-width" type="text" placeholder="Need something?...">
-                    <button class="btn button1" type="submit">Go</button>
-                </form>
-        </li>
+        <!--<li class="nav-item ">-->
+                <!--<form class="form-inline centered" action="#">-->
+                    <!--<input class="form-control limit-width" type="text" placeholder="Need something?...">-->
+                    <!--<button class="btn button1" type="submit">Go</button>-->
+                <!--</form>-->
+        <!--</li>-->
 
-      </ul>
+      <!--</ul>-->
 
-      <ul class="nav navbar-nav ml-auto">
-        <!-- <li class="nav-item">
-            <img class="logo" src="imgs/profile.png">
-        </li> -->
-      </ul>
+      <!--<ul class="nav navbar-nav ml-auto">-->
+        <!--<li class="nav-item">-->
+            <!--<img class="logo" src="imgs/profile.png">-->
+        <!--</li>-->
+      <!--</ul>-->
       <ul class="nav navbar-nav ml-auto" id="lastNav">
         <li class="nav-item">
             <button type="button" id="logoutButton" class="btn button1" onclick="logout()">
@@ -65,26 +65,26 @@
   </div>
 </nav>
 
-<div id="mySidenav" class="sidenav" style="margin-top: 70px; background-color: black">
-    <h2 class="text-title">Sections</h2>
-        <ul class="text-regular">
-            <li><a href="#">On Demand</a></li>
-            <li><a href="#">Fresh</a></li>
-         </ul>
-    <h2 class="text-title">Categories</h2>
-        <ul class="text-regular">
-            <li><img src="imgs/meat.png"> <a href="#" style="display: inline-block">Meat</a></li>
-            <li><img src="imgs/dairy.png"> <a href="#" style="display: inline-block">Dairy</a></li>
-            <li><img src="imgs/vege.png"> <a href="#" style="display: inline-block">Fruits/Vegetables</a></li>
-            <li><img src="imgs/baked.png"> <a href="#" style="display: inline-block">Baked Goods</a></li>
-            <li><img src="imgs/drinks.png"> <a href="#" style="display: inline-block">Drinks</a></li>
-            <li><img src="imgs/furni.png"> <a href="#" style="display: inline-block">Furniture</a></li>
-            <li><img src="imgs/cloth.png"> <a href="#" style="display: inline-block">Clothing</a></li>
-            <li><img src="imgs/elec.png"> <a href="#" style="display: inline-block">Electronics</a></li>
-         </ul>
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-</div>
-<div class="sidenav-open button1" onclick="openNav()">&#9776;Site Map</div>
+<!--<div id="mySidenav" class="sidenav" style="margin-top: 70px; background-color: black">-->
+    <!--<h2 class="text-title">Sections</h2>-->
+        <!--<ul class="text-regular">-->
+            <!--<li><a href="#">On Demand</a></li>-->
+            <!--<li><a href="#">Fresh</a></li>-->
+         <!--</ul>-->
+    <!--<h2 class="text-title">Categories</h2>-->
+        <!--<ul class="text-regular">-->
+            <!--<li><img src="imgs/meat.png"> <a href="#" style="display: inline-block">Meat</a></li>-->
+            <!--<li><img src="imgs/dairy.png"> <a href="#" style="display: inline-block">Dairy</a></li>-->
+            <!--<li><img src="imgs/vege.png"> <a href="#" style="display: inline-block">Fruits/Vegetables</a></li>-->
+            <!--<li><img src="imgs/baked.png"> <a href="#" style="display: inline-block">Baked Goods</a></li>-->
+            <!--<li><img src="imgs/drinks.png"> <a href="#" style="display: inline-block">Drinks</a></li>-->
+            <!--<li><img src="imgs/furni.png"> <a href="#" style="display: inline-block">Furniture</a></li>-->
+            <!--<li><img src="imgs/cloth.png"> <a href="#" style="display: inline-block">Clothing</a></li>-->
+            <!--<li><img src="imgs/elec.png"> <a href="#" style="display: inline-block">Electronics</a></li>-->
+         <!--</ul>-->
+    <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+<!--</div>-->
+<!--<div class="sidenav-open button1" onclick="openNav()">&#9776;Site Map</div>-->
 
 <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -153,29 +153,28 @@
                         <label for="title" class="text-bold">Title</label>
                         <input type="text" class="form-control" id="title" placeholder="Title" name="title">
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label for="img" class="text-bold">Image</label>-->
-                        <!--<input type="file" accept='image/*' onchange='openFile(event)' class="form-control-file border" name="file" id="img">-->
-                    <!--</div>-->
+                    <div class="form-group">
+                        <label for="postImage" class="text-bold">Picture</label>
+                        <br>
+                        <input type="file" accept="image/*" id="postImage">
+                    </div>
                     <div class="form-group">
                         <label for="price" class="text-bold">Price</label>
                         <input type="text" class="form-control" id="price" placeholder="Price" name="price">
                     </div>
-                    <div class="form-group">
-                        <label for="category" class="text-bold">Category</label>
-                        <select class="form-control" id="category" name="category">
-                            <option>Meat</option>
-                            <option>Dairy</option>
-                            <option>Fruits/Vegetables</option>
-                            <option>Baked Goods</option>
-                            <option>Drinks</option>
-                            <option>Furniture</option>
-                            <option>Clothing</option>
-                            <option>Electronics</option>
-                        </select>
-                    </div>
-                    <!--<div id="googleMap" style="width:100%;height:400px;"></div>-->
-                    <!--<input type="button" value="Current location" id="selectLocation"/>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="category" class="text-bold">Category</label>-->
+                        <!--<select class="form-control" id="category" name="category">-->
+                            <!--<option>Meat</option>-->
+                            <!--<option>Dairy</option>-->
+                            <!--<option>Fruits/Vegetables</option>-->
+                            <!--<option>Baked Goods</option>-->
+                            <!--<option>Drinks</option>-->
+                            <!--<option>Furniture</option>-->
+                            <!--<option>Clothing</option>-->
+                            <!--<option>Electronics</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
                     <button type="button" id="submitPostButton" class="btn button1" onclick="submitPost()">Submit</button>
                 </form>
             </div>
@@ -183,7 +182,7 @@
     </div>
 </div>
 <div id="mapContainer" style="overflow:hidden;position:fixed; display:none; width:80vw; height:80vh; margin-left:10vw; margin-top:10px; background:white; border:#ffde08 solid 5px; border-radius:10px;"><span onclick="$('#mapContainer').hide()"style="position:relative; color:#08b3ab; margin-left:10px; z-index:10;font-size:60px; margin-top:10px;">X</span>
-	<div id="googleMap2" style="width:100%;height:115%;z-index:4;"></div>
+	<div id="map" style="width:100%;height:115%;z-index:4;"></div>
 
 </div>
 

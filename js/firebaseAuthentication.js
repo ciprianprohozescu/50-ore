@@ -1,11 +1,13 @@
-let loginButton, logoutButton, signUpButton;
+let loginButton, logoutButton, signUpButton, uploadButton;
 
 $(document).ready(function() {
     loginButton = document.getElementById("loginButton");
     logoutButton = document.getElementById("logoutButton");
     signUpButton = document.getElementById("signUpButton");
+    uploadButton = document.getElementById("uploadButton");
     if (!firebase.auth().currentUser) {
         logoutButton.style.visibility = "hidden";
+        uploadButton.style.visibility = "hidden";
     }
     else {
         loginButton.style.visibility = "hidden";
@@ -19,12 +21,14 @@ firebase.auth().onAuthStateChanged(function(user) {
         loginButton.style.visibility = "hidden";
         logoutButton.style.visibility = "visible";
         signUpButton.style.visibility = "hidden";
+        uploadButton.style.visibility = "visible";
     }
     else {
         //No user is signed in
         loginButton.style.visibility = "visible";
         logoutButton.style.visibility = "hidden";
         signUpButton.style.visibility = "visible";
+        uploadButton.style.visibility = "hidden";
     }
 });
 

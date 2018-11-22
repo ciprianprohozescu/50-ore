@@ -1,37 +1,43 @@
-let db = {};
+let db = {}, pos = {};
 
 $(document).ready(function() {
-    // Initialize Cloud Firestore through Firebase
-    db = firebase.firestore();
-
-    // Disable deprecated features
-    db.settings({
-        timestampsInSnapshots: true
-    });
-    db.collection("posts").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            let post = doc.data();
-            createPost(post.title, post.price);
-        });
-    });
+    initDatabase();
+    getCurrentLocation();
+    initFeed();
 });
 
 function submitPost() {
+    getCurrentLocation();
     const title = document.getElementById('title').value;
-    const price = document.getElementById('price').value;
-    const category = document.getElementById('category').value;
     if (!title) {
         window.alert("You need to enter a title.");
         return;
     }
+    const price = document.getElementById('price').value;
     if (!price) {
         window.alert("You need to enter a price.");
         return;
     }
+    const today = new Date();
+    const dateTime = {
+        day: today.getDate(),
+        month: today.getMonth(),
+        year: today.getFullYear(),
+        hour: today.getHours(),
+        minute: today.getMinutes()
+    };
+    const image = document.getElementById('postImage').files[0];
+    const imageRef = firebase.storage().ref().child(title + '.jpg');
+    imageRef.put(image);
+
     db.collection("posts").add({
         title: title,
         price: price,
-        category: category
+        //category: category,
+        lat: pos.lat,
+        lng: pos.lng,
+        imageRef: imageRef.fullPath,
+        dateTime: dateTime
     })
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
@@ -42,19 +48,9 @@ function submitPost() {
         });
 }
 
-const ilat = 47.148182;
-const ilong = 27.591623;
-
-const distanceCalc = "Distance from you: " + Math.floor(google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(ilat, ilong), new google.maps.LatLng(clat, clong))/1000)+" km";
-
 const feed = document.getElementById("feed");
 
-for (let i = 1; i <= 100; i++) {
-	//create a post
-
-}
-
-function createPost(titleValue, priceValue) {
+function createPost(titleValue, priceValue, lat, lng, imageRef, dateTimeValue) {
     const post = document.createElement("div");
     const topSide = document.createElement("span");
     const title = document.createElement("h2");
@@ -71,9 +67,8 @@ function createPost(titleValue, priceValue) {
     post.style.marginLeft = "20%";
 
     dateTime.classList.add("button1");
-    const today = new Date();
-    dateTime.textContent = (today.getDate() < 10 ? '0' : '') + today.getDate() + '.' + (today.getMonth() < 9 ? '0' : '') + (today.getMonth() + 1) + '.' + today.getFullYear()
-        + ' ' + (today.getHours() < 10 ? '0' : '')+ today.getHours() + ':' + (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
+    dateTime.textContent = (dateTimeValue.day < 10 ? '0' : '') + dateTimeValue.day + '.' + (dateTimeValue.month < 9 ? '0' : '') + (dateTimeValue.month + 1) + '.' + dateTimeValue.year
+        + ' ' + (dateTimeValue.hour < 10 ? '0' : '')+ dateTimeValue.hour + ':' + (dateTimeValue.minute < 10 ? '0' : '') + dateTimeValue.minute;
     dateTime.style.padding = "1%";
     dateTime.style.display = "inline-block";
 
@@ -86,7 +81,9 @@ function createPost(titleValue, priceValue) {
     topSide.appendChild(title);
     topSide.appendChild(dateTime);
 
-    img.setAttribute("src", "imgs/test_pooky.jpg");
+    firebase.storage().ref().child(imageRef).getDownloadURL().then(function(url) {
+        img.setAttribute("src", url);
+    });
     img.classList.add("background-obj");
     img.style.width = "100%";
     img.style.margin = "auto";
@@ -123,7 +120,7 @@ function createPost(titleValue, priceValue) {
     };
 
     distance.classList.add("button1");
-    distance.textContent = distanceCalc;
+    distance.textContent = distanceInKmBetweenEarthCoordinates(lat, lng, pos.lat, pos.lng) + ' km';
     distance.style.cssFloat = "right";
     distance.style.padding = "1%";
     distance.style.display = "inline-block";
@@ -134,7 +131,7 @@ function createPost(titleValue, priceValue) {
     showMap.style.cssFloat = "right";
     showMap.style.display = "inline-block";
     showMap.onclick = function() {
-        addMarker2(new google.maps.LatLng(ilat,ilong));
+        drawMap(lat, lng);
     };
 
     bottomSide.style.marginTop = "20px";
@@ -151,4 +148,67 @@ function createPost(titleValue, priceValue) {
     post.style.marginBottom = "5%";
 
     feed.appendChild(post);
+}
+function initDatabase() {
+    // Initialize Cloud Firestore through Firebase
+    db = firebase.firestore();
+
+    // Disable deprecated features
+    db.settings({
+        timestampsInSnapshots: true
+    });
+}
+function initFeed() {
+    while (feed.firstChild) {
+        feed.removeChild(feed.firstChild);
+    }
+    db.collection("posts").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            let post = doc.data();
+            createPost(post.title, post.price, post.lat, post.lng, post.imageRef, post.dateTime);
+        });
+    });
+}
+function getCurrentLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            console.log("lat: " + pos.lat + "; long: " + pos.lng);
+        }, function() {
+            //handleLocationError(true, infoWindow, map.getCenter());
+            window.alert("Could not get your current location.");
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        //handleLocationError(false, infoWindow, map.getCenter());
+        window.alert("Your browser does not support geolocation.");
+    }
+}
+
+function degreesToRadians(degrees) {
+    return degrees * Math.PI / 180;
+}
+function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+    var earthRadiusKm = 6371;
+
+    var dLat = degreesToRadians(lat2-lat1);
+    var dLon = degreesToRadians(lon2-lon1);
+
+    lat1 = degreesToRadians(lat1);
+    lat2 = degreesToRadians(lat2);
+
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return (earthRadiusKm * c).toFixed(2);
+}
+function drawMap(lat, lng) {
+    let position = {lat: lat, lng: lng};
+    let map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 10, center: position});
+    let marker = new google.maps.Marker({position: position, map: map});
+    document.getElementById('mapContainer').style.display = 'block';
 }
